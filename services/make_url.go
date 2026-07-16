@@ -1,7 +1,10 @@
 package services
 
-import "fmt"
+import (
+	"fmt"
+	"weather/models"
+)
 
-func makeUrl(baseURL string, city string, apiKey string) string {
-	return fmt.Sprintf("%s?q=%s&units=metric&appid=%s", baseURL, city, apiKey)
+func makeUrl(config models.Config, city string) string {
+	return fmt.Sprintf("%s?q=%s&units=metric&appid=%s", config.BaseURL, city, config.APIKey)
 }

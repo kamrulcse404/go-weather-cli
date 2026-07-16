@@ -11,13 +11,13 @@ import (
 
 
 func GetWeather(city string) (models.WeatherResponse, error) {
-	baseURL, apiKey, err := config.LoadEnv()
+	config, err := config.LoadEnv()
 
 	if err != nil {
 		return models.WeatherResponse{}, err 
 	}
 
-	url := makeUrl(baseURL, city, apiKey)
+	url := makeUrl(config, city)
 
 	res, err := http.Get(url)
 
