@@ -2,24 +2,28 @@ package config
 
 import (
 	"os"
-	"weather/models"
 
 	"github.com/joho/godotenv"
 )
 
-func LoadEnv() (models.Config, error) {
+type Config struct {
+	BaseURL string
+	APIKey  string
+}
+
+
+func LoadEnv() (Config, error) {
 	err := godotenv.Load()
 
 	if err != nil {
-		return models.Config{}, err
+		return Config{}, err
 	}
 
-	baseURL  := os.Getenv("BASE_URL")
+	baseURL := os.Getenv("BASE_URL")
 	apiKey := os.Getenv("OPENWEATHER_API_KEY")
 
-	var config models.Config
-	config.BaseURL = baseURL
-	config.APIKey = apiKey
-	
-	return config, nil
+	return Config{
+		BaseURL: baseURL,
+		APIKey:  apiKey,
+	}, nil
 }
