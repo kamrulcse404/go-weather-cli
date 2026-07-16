@@ -20,8 +20,14 @@ func GetWeather(cfg config.Config, city string) (models.WeatherResponse, error) 
 	}
 	defer res.Body.Close()
 
+	var apiErr models.ErrorResponse
 	if res.StatusCode != http.StatusOK {
-		return models.WeatherResponse{}, fmt.Errorf("failed to fetch weather: %s", res.Status)
+		err := json.NewDecoder(res.Body).Decode(&apiErr)
+		if err != nil {
+			return models.WeatherResponse{}, err
+		}
+
+		return models.WeatherResponse{}, fmt.Errorf("weather API (%s): %s", apiErr.Cod, apiErr.Message)
 	}
 
 	var weather models.WeatherResponse
