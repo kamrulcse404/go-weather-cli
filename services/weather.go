@@ -5,16 +5,20 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"weather/config"
 	"weather/models"
 )
 
-const (
-	baseURL = "https://api.openweathermap.org/data/2.5/weather"
-	apiKey  = "eb3a7249b3e996fc89bd942cc168daa0"
-)
 
 func GetWeather(city string) (models.WeatherResponse, error) {
-	url := fmt.Sprintf("%s?q=%s&units=metric&appid=%s", baseURL, city, apiKey)
+	baseURL, apiKey, err := config.LoadEnv()
+
+	if err != nil {
+		return models.WeatherResponse{}, err 
+	}
+
+	url := makeUrl(baseURL, city, apiKey)
+
 	res, err := http.Get(url)
 
 	if err != nil {
