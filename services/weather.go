@@ -3,17 +3,17 @@ package services
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
+	"net/url"
 	"weather/config"
 	"weather/models"
 )
 
+func GetWeather(cfg config.Config, city string) (models.WeatherResponse, error) {
+	escapedCity := url.QueryEscape(city)
+	requestURL := makeURL(cfg, escapedCity)
 
-func GetWeather(cfg config.Config ,city string) (models.WeatherResponse, error) {
-	url := makeURL(cfg, city)
-
-	res, err := http.Get(url)
+	res, err := http.Get(requestURL)
 
 	if err != nil {
 		return models.WeatherResponse{}, err
@@ -23,15 +23,10 @@ func GetWeather(cfg config.Config ,city string) (models.WeatherResponse, error) 
 	if res.StatusCode != http.StatusOK {
 		return models.WeatherResponse{}, fmt.Errorf("failed to fetch weather: %s", res.Status)
 	}
-	body, err := io.ReadAll(res.Body)
-
-	if err != nil {
-		return models.WeatherResponse{}, err
-	}
 
 	var weather models.WeatherResponse
-	err = json.Unmarshal(body, &weather)
 
+	err = json.NewDecoder(res.Body).Decode(&weather)
 	if err != nil {
 		return models.WeatherResponse{}, err
 	}
