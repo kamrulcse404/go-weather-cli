@@ -10,13 +10,7 @@ import (
 )
 
 
-func GetWeather(city string) (models.WeatherResponse, error) {
-	cfg, err := config.LoadEnv()
-
-	if err != nil {
-		return models.WeatherResponse{}, err 
-	}
-
+func GetWeather(cfg config.Config ,city string) (models.WeatherResponse, error) {
 	url := makeURL(cfg, city)
 
 	res, err := http.Get(url)
