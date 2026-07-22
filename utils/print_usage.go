@@ -11,4 +11,6 @@ func PrintUsage() {
 	fmt.Println()
 	fmt.Println("Example:")
 	fmt.Println("  weather Dhaka")
+	fmt.Println("Options:")
+	fmt.Println("  -h, --help    Show this help message")
 }

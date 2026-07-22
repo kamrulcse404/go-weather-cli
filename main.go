@@ -15,6 +15,12 @@ func main() {
 		return
 	}
 
+	arg := os.Args[1]
+	if arg == "--help" || arg == "-h" {
+		utils.PrintUsage()
+		return
+	}
+
 	city := strings.Join(os.Args[1:], " ")
 
 	cfg, err := config.LoadEnv()
