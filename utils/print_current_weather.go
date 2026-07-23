@@ -5,7 +5,7 @@ import (
 	"weather/models"
 )
 
-func PrintWeather(weather models.WeatherResponse) {
+func PrintCurrentWeather(weather models.WeatherResponse) {
 	fmt.Printf("%-15s %s\n", "Name:", weather.Name)
 	fmt.Printf("%-15s %.1f °C\n", "Temperature:", weather.Main.Temp)
 	fmt.Printf("%-15s %d %%\n", "Humidity:", weather.Main.Humidity)

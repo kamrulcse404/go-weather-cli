@@ -31,6 +31,14 @@ func main() {
 		}
 		commands.HandleCurrentWeather(os.Args, cfg)
 
+	case "forecast":
+		cfg, err := config.LoadEnv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
+		commands.HandleForecast(os.Args, cfg)
+
 	default:
 		fmt.Printf("Unknown command: %s\n", command)
 		utils.PrintUsage()

@@ -23,5 +23,5 @@ func HandleCurrentWeather(args []string, cfg config.Config) {
 		return
 	}
 
-	utils.PrintWeather(weather)
+	utils.PrintCurrentWeather(weather)
 }

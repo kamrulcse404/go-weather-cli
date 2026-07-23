@@ -5,10 +5,10 @@ type City struct {
 }
 
 type ForecastItem struct {
-	Main    Main     `json:"main"`
-	Weather []Weather `json:"weather"`
-	Wind    Wind      `json:"wind"`
-	Date    string    `json:"dt_txt"`
+	Main     Main      `json:"main"`
+	Weather  []Weather `json:"weather"`
+	Wind     Wind      `json:"wind"`
+	DateTime string    `json:"dt_txt"`
 }
 
 type ForecastResponse struct {
