@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"weather/commands"
 	"weather/config"
-	"weather/services"
 	"weather/utils"
 )
 
@@ -22,29 +22,15 @@ func main() {
 		return
 	}
 
+	cfg, err := config.LoadEnv()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
 	switch command {
 	case "current":
-		if len(os.Args) < 3 {
-			utils.PrintUsage()
-			return
-		}
-
-		cfg, err := config.LoadEnv()
-		if err != nil {
-			fmt.Println("Error:", err)
-			return
-		}
-
-		city := strings.Join(os.Args[2:], " ")
-
-		weather, err := services.GetWeather(cfg, city)
-
-		if err != nil {
-			fmt.Println("Error:", err)
-			return
-		}
-
-		utils.PrintWeather(weather)
+		commands.HandleCurrentWeather(os.Args, cfg)
 
 	default:
 		fmt.Printf("Unknown command: %s\n", command)
