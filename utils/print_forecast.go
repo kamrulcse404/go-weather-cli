@@ -51,7 +51,7 @@ func PrintForecast(forecasts models.ForecastResponse) {
 			temp,
 			item.Main.Humidity,
 			wind,
-			strings.Title(description),
+			description,
 		)
 	}
 
