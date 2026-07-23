@@ -9,9 +9,9 @@ import (
 	"weather/models"
 )
 
-func GetWeather(cfg config.Config, city string) (models.WeatherResponse, error) {
+func GetCurrentWeather(cfg config.Config, city string) (models.WeatherResponse, error) {
 	escapedCity := url.QueryEscape(city)
-	requestURL := makeURL(cfg, escapedCity)
+	requestURL := makeURL(cfg, "weather", escapedCity)
 
 	res, err := http.Get(requestURL)
 

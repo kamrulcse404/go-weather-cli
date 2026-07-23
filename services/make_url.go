@@ -5,6 +5,11 @@ import (
 	"weather/config"
 )
 
-func makeURL(cfg config.Config, city string) string {
-	return fmt.Sprintf("%s?q=%s&units=metric&appid=%s", cfg.BaseURL, city, cfg.APIKey)
+func makeURL(cfg config.Config, endpoint, city string) string {
+	return fmt.Sprintf("%s%s?q=%s&units=metric&appid=%s",
+		cfg.BaseURL,
+		endpoint,
+		city,
+		cfg.APIKey,
+	)
 }
