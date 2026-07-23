@@ -22,14 +22,13 @@ func main() {
 		return
 	}
 
-	cfg, err := config.LoadEnv()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-
 	switch command {
 	case "current":
+		cfg, err := config.LoadEnv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
 		commands.HandleCurrentWeather(os.Args, cfg)
 
 	default:

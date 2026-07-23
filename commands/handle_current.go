@@ -2,7 +2,6 @@ package commands
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"weather/config"
 	"weather/services"
@@ -10,12 +9,12 @@ import (
 )
 
 func HandleCurrentWeather(args []string, cfg config.Config) {
-	if len(os.Args) < 3 {
+	if len(args) < 3 {
 		utils.PrintUsage()
 		return
 	}
 
-	city := strings.Join(os.Args[2:], " ")
+	city := strings.Join(args[2:], " ")
 
 	weather, err := services.GetWeather(cfg, city)
 
