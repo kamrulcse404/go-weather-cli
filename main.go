@@ -15,26 +15,40 @@ func main() {
 		return
 	}
 
-	arg := os.Args[1]
-	if arg == "--help" || arg == "-h" {
+	command := strings.ToLower(os.Args[1])
+
+	if command == "--help" || command == "-h" {
 		utils.PrintUsage()
 		return
 	}
 
-	city := strings.Join(os.Args[1:], " ")
+	switch command {
+	case "current":
+		if len(os.Args) < 3 {
+			utils.PrintUsage()
+			return
+		}
 
-	cfg, err := config.LoadEnv()
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		cfg, err := config.LoadEnv()
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
+
+		city := strings.Join(os.Args[2:], " ")
+
+		weather, err := services.GetWeather(cfg, city)
+
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
+
+		utils.PrintWeather(weather)
+
+	default:
+		fmt.Printf("Unknown command: %s\n", command)
+		utils.PrintUsage()
 	}
 
-	weather, err := services.GetWeather(cfg, city)
-
-	if err != nil {
-		fmt.Println("Error: ", err)
-		return
-	}
-
-	utils.PrintWeather(weather)
 }
